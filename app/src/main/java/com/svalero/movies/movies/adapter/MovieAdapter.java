@@ -1,6 +1,7 @@
 package com.svalero.movies.movies.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import com.svalero.movies.R;
 import com.svalero.movies.beans.Movie;
+import com.svalero.movies.movies.lstMovies.view.DescriptMoviesActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Compone e integra los datos en los elementos visuales que corresponde.
@@ -23,19 +24,14 @@ import java.util.List;
  */
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private ArrayList<Movie> lstMovies;
-    private Context context;
-    private RecyclerViewClickListener listener;
-    //recyclerview button onclicklistener (para que aparezca la sipnosis)
 
-    public MovieAdapter(ArrayList<Movie> lstMovies, Context context, RecyclerViewClickListener listener) {
+    public MovieAdapter(ArrayList<Movie> lstMovies) {
         this.lstMovies = lstMovies;
-        this.context = context;
-        this.listener = listener;
     }
 
     //Le he quitado lo estático a la clase MovieViewHolder
     /*Tantos elementos como objetos quiera mostrar en la fila*/
-    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class MovieViewHolder extends RecyclerView.ViewHolder {
         public ImageView img; //0x565854
         public TextView titulo; // 0x457855
         public TextView sipnosis; // 0x487889
@@ -45,13 +41,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             img = v.findViewById(R.id.imgMovie);
             titulo = v.findViewById(R.id.txtTitulo);
             sipnosis = v.findViewById(R.id.txtSipnosis);
-            v.setOnClickListener(this);
+
         }
 
-        @Override
-        public void onClick(View v) {
-            listener.onClick(v, getAdapterPosition());
-        }
     }
 
     /**
@@ -79,17 +71,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         // holder.img
-        Movie movie = lstMovies.get(position);
+        final Movie movie = lstMovies.get(position);
 
         holder.titulo.setText(movie.getTitulo());
-        holder.sipnosis.setText(movie.getSinopsis());
 
-        //holder.boton.setOnClickListener
-        Picasso.with(context).load("https://image.tmdb.org/t/p/w500" + movie.getImage()).into(holder.img);
+        Picasso.get().load("https://image.tmdb.org/t/p/w500" + movie.getImage()).into(holder.img);
 
-        /*public void onClick(View v) {
-            onItemClickListener.onItemClick(position);
-        }*/
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DescriptMoviesActivity.class);
+                intent.putExtra("titulo", movie.getTitulo());
+                intent.putExtra("imagen", movie.getImage());
+                intent.putExtra("sipnosis", movie.getSinopsis());
+                v.getContext().startActivity(intent);
+            }
+        });
 
     }
 

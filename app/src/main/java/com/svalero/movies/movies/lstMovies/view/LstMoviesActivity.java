@@ -47,7 +47,7 @@ public class LstMoviesActivity extends AppCompatActivity implements LstMoviesCon
 
         // Crear un nuevo adaptador
         setOnClickListener();
-        MovieAdapter adapter = new MovieAdapter(movies, this, listener);
+        MovieAdapter adapter = new MovieAdapter(movies);
         recycler.setAdapter(adapter);
     }
 

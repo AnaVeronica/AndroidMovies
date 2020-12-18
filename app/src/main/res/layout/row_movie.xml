@@ -50,15 +50,8 @@
                     android:layout_marginBottom="2dp"
                     android:text="Título"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
+                    android:textSize="25sp"
                     android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/txtSipnosis"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Sipnosis"
-                    android:textSize="14sp"/>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

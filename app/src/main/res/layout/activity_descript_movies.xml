@@ -25,8 +25,8 @@
 
             <ImageView
                 android:id="@+id/imgMovie"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="120dp"
+                android:layout_height="190dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
@@ -52,7 +52,7 @@
                     android:layout_marginBottom="2dp"
                     android:text="Título"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Sipnosis"
-                    android:textSize="14sp"/>
+                    android:textSize="18sp"/>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
