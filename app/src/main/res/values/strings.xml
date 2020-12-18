@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Movies</string>
+    <string name="activity_login_email">Email:</string>
+</resources>
