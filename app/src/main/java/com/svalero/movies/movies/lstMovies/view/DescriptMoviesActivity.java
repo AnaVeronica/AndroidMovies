@@ -4,20 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.svalero.movies.R;
-import com.svalero.movies.beans.Movie;
-import com.svalero.movies.movies.adapter.DescriptMovieAdapter;
-import com.svalero.movies.movies.lstMovies.contract.LstMoviesContract;
-import com.svalero.movies.movies.lstMovies.presenter.LstMoviesPresenter;
-
-import java.util.ArrayList;
 
 public class DescriptMoviesActivity extends AppCompatActivity  {
 

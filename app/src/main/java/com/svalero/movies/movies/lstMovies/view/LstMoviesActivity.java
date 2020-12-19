@@ -3,6 +3,9 @@ package com.svalero.movies.movies.lstMovies.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.svalero.movies.R;
 import com.svalero.movies.beans.Movie;
 import com.svalero.movies.movies.adapter.MovieAdapter;
+import com.svalero.movies.movies.filter.view.FilterMoviesActivity;
 import com.svalero.movies.movies.lstMovies.contract.LstMoviesContract;
 import com.svalero.movies.movies.lstMovies.presenter.LstMoviesPresenter;
 
@@ -23,11 +27,15 @@ public class LstMoviesActivity extends AppCompatActivity implements LstMoviesCon
     private LstMoviesPresenter lstMoviesPresenter;
     private RecyclerView.LayoutManager lManager;
     private MovieAdapter.RecyclerViewClickListener listener;
+    private String[] listaSpinner = {" ", "es", "en", "de", "fr", "ko"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lst_movies);
+
+        cargarSpinner();
 
         lstMoviesPresenter = new LstMoviesPresenter(this);
         lstMoviesPresenter.getMovies();
@@ -61,9 +69,34 @@ public class LstMoviesActivity extends AppCompatActivity implements LstMoviesCon
         };
     }
 
-
     @Override
     public void error(String message) {
         Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+    }
+
+
+
+    public void cargarSpinner() {
+        Spinner spinnerFiltro = (Spinner) findViewById(R.id.spinnerFiltro);
+        ArrayAdapter<String> adapterFiltro = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listaSpinner);
+        spinnerFiltro.setAdapter(adapterFiltro);
+        spinnerFiltro.setSelected(false);
+        spinnerFiltro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String idioma = parent.getItemAtPosition(position).toString();
+                if(idioma == " ")
+                    return;
+                Intent intent = new Intent(parent.getContext(), FilterMoviesActivity.class);
+                intent.putExtra("idioma", idioma);
+                parent.getContext().startActivity(intent);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 }

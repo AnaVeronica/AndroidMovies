@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".movies.lstMovies.view.DescriptMoviesActivity" />
+        <activity android:name=".movies.filter.view.FilterMoviesActivity" />
         <activity android:name=".MainActivity"/>
     </application>
 
