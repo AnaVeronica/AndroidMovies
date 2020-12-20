@@ -47,18 +47,20 @@ public class LstMoviesActivity extends AppCompatActivity implements LstMoviesCon
         recycler = (RecyclerView) findViewById(R.id.recyclerMovies);
         recycler.setHasFixedSize(true);
 
-        // Usar un administrador para LinearLayout
-        // 1º) Tipo Lista
-        // 2º) Tipo Grid
+        // Administrador para LinearLayout tipo lista
         lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
 
-        // Crear un nuevo adaptador
+        // Llama al evento al hacer click en la película
         setOnClickListener();
+        // Crear un nuevo adaptador
         MovieAdapter adapter = new MovieAdapter(movies);
         recycler.setAdapter(adapter);
     }
 
+    /**
+     * Al hacer click en la película cambia a la pantalla donde aparece la descripción
+     */
     private void setOnClickListener() {
         listener = new MovieAdapter.RecyclerViewClickListener() {
             @Override
@@ -75,14 +77,23 @@ public class LstMoviesActivity extends AppCompatActivity implements LstMoviesCon
     }
 
 
-
+    /**
+     * Método que carga el spinner de valores previamente indicados
+     */
     public void cargarSpinner() {
-        Spinner spinnerFiltro = (Spinner) findViewById(R.id.spinnerFiltro);
+        Spinner spinnerFiltro = findViewById(R.id.spinnerFiltro);
         ArrayAdapter<String> adapterFiltro = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listaSpinner);
         spinnerFiltro.setAdapter(adapterFiltro);
         spinnerFiltro.setSelected(false);
         spinnerFiltro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+            /**
+             * Captura el elemento seleccionado del spinner
+             * @param parent
+             * @param view
+             * @param position
+             * @param id
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String idioma = parent.getItemAtPosition(position).toString();

@@ -1,7 +1,6 @@
 package com.svalero.movies.movies.filter.contract;
 
 import com.svalero.movies.beans.Movie;
-import com.svalero.movies.movies.lstMovies.contract.LstMoviesContract;
 
 import java.util.ArrayList;
 

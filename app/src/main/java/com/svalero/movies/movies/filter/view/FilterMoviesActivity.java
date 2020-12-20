@@ -2,10 +2,6 @@ package com.svalero.movies.movies.filter.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,12 +13,10 @@ import com.svalero.movies.beans.Movie;
 import com.svalero.movies.movies.adapter.MovieAdapter;
 import com.svalero.movies.movies.filter.contract.FilterMoviesContract;
 import com.svalero.movies.movies.filter.presenter.FilterMoviesPresenter;
-import com.svalero.movies.movies.lstMovies.view.LstMoviesActivity;
 
 import java.util.ArrayList;
 
 public class FilterMoviesActivity extends AppCompatActivity implements FilterMoviesContract.View {
-    //filtrar por original_language
     private RecyclerView recycler;
     private RecyclerView.LayoutManager lManager;
     private FilterMoviesPresenter filterMoviesPresenter;
@@ -44,9 +38,9 @@ public class FilterMoviesActivity extends AppCompatActivity implements FilterMov
     public void success(ArrayList<Movie> movies) {
         // Obtener el Recycler
         recycler = findViewById(R.id.recyclerMovies);
-        //recycler.setHasFixedSize(true);
+        recycler.setHasFixedSize(true);
 
-        // Usar un administrador para LinearLayout
+        // Administrador para LinearLayout tipo lista
         lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
 

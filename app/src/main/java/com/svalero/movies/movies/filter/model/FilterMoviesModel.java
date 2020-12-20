@@ -11,10 +11,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class FilterMoviesModel implements FilterMoviesContract.Model {
-    private static final String URL = "https://api.themoviedb.org/3/movie/popular?api_key=d9c4177bb1cc819d43088d25fbe2474c&language=";
+    private static final String URL = "https://api.themoviedb.org/3/movie/popular?api_key=d9c4177bb1cc819d43088d25fbe2474c&language=es-ES&with_original_language=";
 
     private ArrayList<Movie> lstArrayMovies;
     private String idioma;

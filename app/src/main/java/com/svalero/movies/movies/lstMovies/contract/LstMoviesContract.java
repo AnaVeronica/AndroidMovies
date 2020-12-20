@@ -15,7 +15,7 @@ public interface LstMoviesContract {
     }
 
     interface Model {
-        /*Me tienes que mandar el Callback, camino de retorno*/
+        /*Manda el Callback, camino de retorno*/
         void getMoviesWS(OnLstMoviesListener onLstMoviesListener);
         /*Programación Reactiva (Callback)*/
         interface OnLstMoviesListener{
