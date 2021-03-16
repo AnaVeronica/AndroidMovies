@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:animateLayoutChanges="true"
-    app:cardCornerRadius="20dp"
-    app:cardElevation="4dp"
-    app:cardUseCompatPadding="true">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerMovies"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:padding="@dimen/general_recyclerView_padding"/>
 
-</androidx.cardview.widget.CardView>
+    <!-- LAYOUT ERROR -->
+    <!--<LinearLayout
+        android:id="@+id/activity_filter_productos_layout_error"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_top_layoutError 200dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/activity_filter_productos_txt_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+        <Button
+            android:id="@+id/activity_filter_productos_button_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_button_layoutError 8dp"
+            android:layout_gravity="center"
+            android:text="@string/retry_text_button_layoutError Reintentar" />
+    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/activity_filter_productos_progressbar_loading"
+        android:layout_gravity="center"
+        android:layout_width="@dimen/loading_width 50dp"
+        android:layout_height="@dimen/loading_height 50dp"
+        android:layout_marginTop="@dimen/loading_marginTop 200dp"/>-->
+
+</LinearLayout>
