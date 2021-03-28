@@ -29,7 +29,7 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
 
             @Override
             public void reject(String error) {
-                vista.error("Fallo al traer los datos");
+                vista.error(error);
             }
         },idioma);
     }

@@ -2,7 +2,10 @@ package com.svalero.movies.movies.filter.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +23,12 @@ public class FilterMoviesActivity extends AppCompatActivity implements FilterMov
     private RecyclerView recycler;
     private RecyclerView.LayoutManager lManager;
     private FilterMoviesPresenter filterMoviesPresenter;
+    String idioma;
+
+    private View layoutError;
+    private TextView textViewError;
+    private Button buttonRetry;
+    private ProgressBar progressBarLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,17 +36,47 @@ public class FilterMoviesActivity extends AppCompatActivity implements FilterMov
         setContentView(R.layout.activity_filter_movies);
 
         Intent i = this.getIntent();
-        String idioma = i.getStringExtra("idioma");
+        idioma = i.getStringExtra("idioma");
+
+        // Obtener el Recycler y el layout y sus componentes en caso de error
+        recycler = findViewById(R.id.recyclerFilterMovies);
+        layoutError = findViewById(R.id.activity_filter_productos_layout_error);
+        textViewError = findViewById(R.id.activity_filter_productos_txt_error);
+        buttonRetry = findViewById(R.id.activity_filter_productos_button_retry);
+        progressBarLoading = findViewById(R.id.activity_filter_productos_progressbar_loading);
+
+        progressBarLoading.setVisibility(View.VISIBLE);
 
 
         filterMoviesPresenter = new FilterMoviesPresenter(this, idioma);
         filterMoviesPresenter.getMovies(idioma);
+
+        setRetry();
+    }
+
+    private void setRetry() {
+        buttonRetry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBarLoading.setVisibility(View.VISIBLE);
+                hideError();
+
+                filterMoviesPresenter.getMovies(idioma);
+            }
+        });
     }
 
     @Override
     public void success(ArrayList<Movie> movies) {
-        // Obtener el Recycler
-        recycler = findViewById(R.id.recyclerMovies);
+        showDataInRecyclerView(movies);
+    }
+
+    private void showDataInRecyclerView(ArrayList<Movie> movies) {
+        progressBarLoading.setVisibility(View.GONE);
+
+        recycler.setVisibility(View.VISIBLE);
+        layoutError.setVisibility(View.GONE);
+
         recycler.setHasFixedSize(true);
 
         // Administrador para LinearLayout tipo lista
@@ -51,7 +90,20 @@ public class FilterMoviesActivity extends AppCompatActivity implements FilterMov
 
     @Override
     public void error(String mensaje) {
-        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+        showError(mensaje);
+    }
+
+    private void showError(String message) {
+        progressBarLoading.setVisibility(View.GONE);
+
+        recycler.setVisibility(View.GONE);
+        layoutError.setVisibility(View.VISIBLE);
+
+        textViewError.setText(message);
+    }
+
+    private void hideError() {
+        layoutError.setVisibility(View.GONE);
     }
 
 }

@@ -45,27 +45,37 @@ public class FilterMoviesModel implements FilterMoviesContract.Model {
 
         @Override
         protected Boolean doInBackground(String... strings) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             Post post = new Post();
 
             try {
                 JSONObject objectMovies = post.getServerDataGetObject(URL + idioma);
                 JSONArray lstMovies = objectMovies.getJSONArray("results");
                 lstArrayMovies = Movie.getFilterArrayListFromJSON(lstMovies);
+                return true;
 
             } catch (JSONException e) {
                 e.printStackTrace();
+                return false;
             }
-            return true;
         }
         @Override
         protected void onPostExecute(Boolean resp) {
-            if(resp){
-                if(lstArrayMovies!=null && lstArrayMovies.size()>0){
-                    onMoviesListener.resolve(lstArrayMovies);
+            try {
+                if(resp){
+                    if(lstArrayMovies!=null && lstArrayMovies.size()>0){
+                        onMoviesListener.resolve(lstArrayMovies);
+                    }
+                } else {
+                    onMoviesListener.reject("Fallo al listar las películas");
                 }
-            }else{
-                onMoviesListener.reject("Error al traer " +
-                        "los datos del Servidor.");
+            } catch(Exception e){
+                onMoviesListener.reject("Fallo: Listar películas");
             }
         }
     }
