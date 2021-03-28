@@ -15,6 +15,14 @@ android {
     }
 
     buildTypes {
+        def STRING = "String"
+        def INT = "int"
+        def BOOLEAN = "boolean"
+
+        debug {
+            buildConfigField STRING, "URL_BASE", '"https://api.themoviedb.org/3/movie/popular?api_key=d9c4177bb1cc819d43088d25fbe2474c&language=es-ES"'
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
