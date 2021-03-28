@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Movies</string>
     <string name="idioma_original">Filtrar por idioma original:</string>
+    <string name="layoutError_retry_text_button">Reintentar</string>
 </resources>

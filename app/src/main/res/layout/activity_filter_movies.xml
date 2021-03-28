@@ -9,7 +9,7 @@
         android:id="@+id/recyclerMovies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/general_recyclerView_padding"/>
+        android:padding="@dimen/recyclerView_generalPadding"/>
 
     <!-- LAYOUT ERROR -->
     <!--<LinearLayout

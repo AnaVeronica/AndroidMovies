@@ -7,13 +7,6 @@
     android:orientation="vertical"
     tools:context=".movies.lstMovies.view.LstMoviesActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="220dp"
-        android:text="@string/idioma_original"
-        android:textSize="15sp"/>
-
     <Spinner
         android:id="@+id/spinnerFiltro"
         android:layout_width="match_parent"
@@ -22,6 +15,38 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerMovies"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:padding="@dimen/recyclerView_generalPadding"/>
+
+    <!-- LAYOUT ERROR -->
+    <LinearLayout
+        android:id="@+id/activity_lst_movies_layout_error"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layoutError_marginTop"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/activity_lst_movies_txt_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+        <Button
+            android:id="@+id/activity_lst_movies_button_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layoutError_marginTop_button"
+            android:layout_gravity="center"
+            android:text="@string/layoutError_retry_text_button" />
+    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/activity_lst_movies_progressbar_loading"
+        android:layout_gravity="center"
+        android:layout_width="@dimen/loading_width"
+        android:layout_height="@dimen/loading_height"
+        android:layout_marginTop="@dimen/loading_marginTop"/>
+
 </LinearLayout>

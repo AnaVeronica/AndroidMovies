@@ -32,28 +32,39 @@ public class LstMoviesModel implements LstMoviesContract.Model {
 
         @Override
         protected Boolean doInBackground(String... strings) {
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             Post post = new Post();
 
             try {
                 JSONObject objectMovies = post.getServerDataGetObject(URL);
                 JSONArray lstMovies = objectMovies.getJSONArray("results");
-                lstArrayMovies = Movie.
-                        getArrayListFromJSON(lstMovies);
+                lstArrayMovies = Movie.getArrayListFromJSON(lstMovies);
+                return true;
+
             } catch (JSONException e) {
                 e.printStackTrace();
+                return false;
             }
-            return true;
         }
 
         @Override
         protected void onPostExecute(Boolean resp) {
-            if(resp){
-                if(lstArrayMovies!=null && lstArrayMovies.size()>0){
-                    onLstMoviesListener.resolve(lstArrayMovies);
+            try {
+                if(resp){
+                    if (lstArrayMovies != null && lstArrayMovies.size() > 0) {
+                        onLstMoviesListener.resolve(lstArrayMovies);
+                    }
+                } else {
+                    onLstMoviesListener.reject("Fallo al listar las películas");
                 }
-            }else{
-                onLstMoviesListener.reject("Error al traer " +
-                        "los datos del Servidor.");
+            } catch(Exception e){
+                onLstMoviesListener.reject("Fallo: Listar películas");
             }
         }
     }

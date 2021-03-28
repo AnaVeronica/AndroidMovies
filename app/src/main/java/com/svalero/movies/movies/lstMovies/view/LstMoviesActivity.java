@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,8 +29,12 @@ public class LstMoviesActivity extends AppCompatActivity implements LstMoviesCon
     private LstMoviesPresenter lstMoviesPresenter;
     private RecyclerView.LayoutManager lManager;
     private MovieAdapter.RecyclerViewClickListener listener;
-    private String[] listaSpinner = {" ", "es", "en", "de", "fr", "ko"};
+    private String[] listaSpinner = {"Filtrar por idioma original:", "es", "en", "de", "fr", "ko"};
 
+    private View layoutError;
+    private TextView textViewError;
+    private Button buttonRetry;
+    private ProgressBar progressBarLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,22 +43,54 @@ public class LstMoviesActivity extends AppCompatActivity implements LstMoviesCon
 
         cargarSpinner();
 
+        // Obtener el Recycler y el layout y sus componentes en caso de error
+        recycler = findViewById(R.id.recyclerMovies);
+        layoutError = findViewById(R.id.activity_lst_movies_layout_error);
+        textViewError = findViewById(R.id.activity_lst_movies_txt_error);
+        buttonRetry = findViewById(R.id.activity_lst_movies_button_retry);
+        progressBarLoading = findViewById(R.id.activity_lst_movies_progressbar_loading);
+
+        progressBarLoading.setVisibility(View.VISIBLE);
+
+
         lstMoviesPresenter = new LstMoviesPresenter(this);
         lstMoviesPresenter.getMovies();
+
+        setRetry();
+    }
+
+    private void setRetry() {
+        buttonRetry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBarLoading.setVisibility(View.VISIBLE);
+                hideError();
+
+                lstMoviesPresenter.getMovies();
+            }
+        });
     }
 
     @Override
     public void success(ArrayList<Movie> movies) {
-        // Obtener el Recycler
-        recycler = (RecyclerView) findViewById(R.id.recyclerMovies);
+        showDataInRecyclerView(movies);
+
+        // Llama al evento al hacer click en la película
+        setOnClickListener();
+    }
+
+    private void showDataInRecyclerView(ArrayList<Movie> movies) {
+        progressBarLoading.setVisibility(View.GONE);
+
+        recycler.setVisibility(View.VISIBLE);
+        layoutError.setVisibility(View.GONE);
+
         recycler.setHasFixedSize(true);
 
         // Administrador para LinearLayout tipo lista
         lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
 
-        // Llama al evento al hacer click en la película
-        setOnClickListener();
         // Crear un nuevo adaptador
         MovieAdapter adapter = new MovieAdapter(movies);
         recycler.setAdapter(adapter);
@@ -73,7 +111,20 @@ public class LstMoviesActivity extends AppCompatActivity implements LstMoviesCon
 
     @Override
     public void error(String message) {
-        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+        showError(message);
+    }
+
+    private void showError(String message) {
+        progressBarLoading.setVisibility(View.GONE);
+
+        recycler.setVisibility(View.GONE);
+        layoutError.setVisibility(View.VISIBLE);
+
+        textViewError.setText(message);
+    }
+
+    private void hideError() {
+        layoutError.setVisibility(View.GONE);
     }
 
 
@@ -97,7 +148,7 @@ public class LstMoviesActivity extends AppCompatActivity implements LstMoviesCon
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String idioma = parent.getItemAtPosition(position).toString();
-                if(idioma == " ")
+                if(idioma.equals("Filtrar por idioma original:"))
                     return;
                 Intent intent = new Intent(parent.getContext(), FilterMoviesActivity.class);
                 intent.putExtra("idioma", idioma);
