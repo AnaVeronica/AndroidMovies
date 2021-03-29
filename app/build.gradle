@@ -21,7 +21,6 @@ android {
 
         debug {
             buildConfigField STRING, "URL_BASE", '"https://api.themoviedb.org/3/"'
-            buildConfigField STRING, "BASE_URL", '"https://api.themoviedb.org/3/movie/popular?api_key=d9c4177bb1cc819d43088d25fbe2474c&language=es-ES"'
         }
 
         release {

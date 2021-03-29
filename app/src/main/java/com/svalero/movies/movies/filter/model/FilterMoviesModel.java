@@ -1,77 +1,41 @@
 package com.svalero.movies.movies.filter.model;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
-import com.svalero.movies.BuildConfig;
+import androidx.annotation.Nullable;
+
 import com.svalero.movies.beans.Movie;
+import com.svalero.movies.beans.MoviesAPIResult;
 import com.svalero.movies.movies.filter.contract.FilterMoviesContract;
-import com.svalero.movies.utils.Post;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import com.svalero.movies.retrofit.ApiClient;
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class FilterMoviesModel implements FilterMoviesContract.Model {
-    private static final String URL = BuildConfig.BASE_URL + "&with_original_language=";
-
-    private ArrayList<Movie> lstArrayMovies;
-    private String idioma;
-    OnMoviesListener onMoviesListener;
-
-    public FilterMoviesModel(String idioma) {
-        this.idioma = idioma;
-    }
 
     @Override
-    public void getMoviesWS(OnMoviesListener onMoviesListener, String idioma) {
-        this.onMoviesListener = onMoviesListener;
-        this.idioma = idioma;
+    public void getMoviesWS(Context context, final FilterMoviesContract.Model.OnMoviesListener onMoviesListener, String idioma) {
+        ApiClient apiClient = new ApiClient(context); // Instanciar a la clase ApiClient
+        final Call<MoviesAPIResult> request = apiClient.getMoviesByOriginalLanguage(idioma); // Devuelve un Call de MoviesAPIResult
 
-        DataApiTask data = new DataApiTask(idioma);
-        data.execute();
-    }
-
-    /**
-     * Permite traer los datos del API en 2º plano
-     */
-    class DataApiTask extends AsyncTask<String, Integer, Boolean> {
-
-        private String idioma;
-
-        public DataApiTask(String idioma) {
-            this.idioma = idioma;
-        }
-
-        @Override
-        protected Boolean doInBackground(String... strings) {
-            Post post = new Post();
-
-            try {
-                JSONObject objectMovies = post.getServerDataGetObject(URL + idioma);
-                JSONArray lstMovies = objectMovies.getJSONArray("results");
-                lstArrayMovies = Movie.getFilterArrayListFromJSON(lstMovies);
-                return true;
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
-        @Override
-        protected void onPostExecute(Boolean resp) {
-            try {
-                if(resp){
-                    if(lstArrayMovies!=null && lstArrayMovies.size()>0){
-                        onMoviesListener.resolve(lstArrayMovies);
-                    }
-                } else {
-                    onMoviesListener.reject("Fallo al listar las películas");
+        // Encolar las peticiones para ejecutarlas en un thread aparte
+        request.enqueue(new Callback<MoviesAPIResult>() { // MoviesAPIResult es el objeto que se desea obtener
+            @Override
+            public void onResponse(@Nullable Call<MoviesAPIResult> call, @Nullable Response<MoviesAPIResult> response) {
+                if (response != null && response.body() != null) {
+                    onMoviesListener.resolve(new ArrayList<Movie>(response.body().getResults()));
                 }
-            } catch(Exception e){
-                onMoviesListener.reject("Fallo: Listar películas");
             }
-        }
+
+            @Override
+            public void onFailure(@Nullable Call<MoviesAPIResult> call, @Nullable Throwable t) {
+                t.printStackTrace();
+                onMoviesListener.reject(t.getLocalizedMessage());
+            }
+        });
     }
 }

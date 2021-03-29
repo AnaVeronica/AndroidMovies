@@ -28,4 +28,9 @@ public class ApiClient {
         TheMovieApiInterface service = retrofit.create(TheMovieApiInterface.class);
         return service.getMovies();
     }
+
+    public Call<MoviesAPIResult> getMoviesByOriginalLanguage(String language) {
+        TheMovieApiInterface service = retrofit.create(TheMovieApiInterface.class);
+        return service.getMoviesByOriginalLanguage(language);
+    }
 }

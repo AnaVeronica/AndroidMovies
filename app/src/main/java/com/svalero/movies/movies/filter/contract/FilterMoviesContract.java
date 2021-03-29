@@ -1,5 +1,7 @@
 package com.svalero.movies.movies.filter.contract;
 
+import android.content.Context;
+
 import com.svalero.movies.beans.Movie;
 
 import java.util.ArrayList;
@@ -8,15 +10,15 @@ public interface FilterMoviesContract {
 
     interface View {
         void success(ArrayList<Movie> movies);
-        void error(String mensaje);
+        void error(String message);
     }
 
     interface Presenter {
-        void getMovies(String idioma);
+        void getMovies(Context context, String idioma);
     }
 
     interface Model {
-        void getMoviesWS(OnMoviesListener onMoviesListener, String idioma);
+        void getMoviesWS(Context context, OnMoviesListener onMoviesListener, String idioma);
 
         interface OnMoviesListener{
             void resolve(ArrayList<Movie> movies);

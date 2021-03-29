@@ -48,8 +48,8 @@ public class FilterMoviesActivity extends AppCompatActivity implements FilterMov
         progressBarLoading.setVisibility(View.VISIBLE);
 
 
-        filterMoviesPresenter = new FilterMoviesPresenter(this, idioma);
-        filterMoviesPresenter.getMovies(idioma);
+        filterMoviesPresenter = new FilterMoviesPresenter(this);
+        filterMoviesPresenter.getMovies(this, idioma);
 
         setRetry();
     }
@@ -61,7 +61,7 @@ public class FilterMoviesActivity extends AppCompatActivity implements FilterMov
                 progressBarLoading.setVisibility(View.VISIBLE);
                 hideError();
 
-                filterMoviesPresenter.getMovies(idioma);
+                filterMoviesPresenter.getMovies(FilterMoviesActivity.this, idioma);
             }
         });
     }

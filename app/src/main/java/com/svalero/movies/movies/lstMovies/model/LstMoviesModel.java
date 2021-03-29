@@ -1,20 +1,13 @@
 package com.svalero.movies.movies.lstMovies.model;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
 import androidx.annotation.Nullable;
 
-import com.svalero.movies.BuildConfig;
 import com.svalero.movies.beans.Movie;
 import com.svalero.movies.beans.MoviesAPIResult;
 import com.svalero.movies.movies.lstMovies.contract.LstMoviesContract;
 import com.svalero.movies.retrofit.ApiClient;
-import com.svalero.movies.utils.Post;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
