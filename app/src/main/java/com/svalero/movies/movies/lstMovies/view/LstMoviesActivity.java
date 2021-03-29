@@ -25,11 +25,17 @@ import java.util.ArrayList;
 
 public class LstMoviesActivity extends AppCompatActivity implements LstMoviesContract.View {
 
+    private static final String ESPANOL = "Español"; // es
+    private static final String INGLES = "Inglés"; // en
+    private static final String ALEMAN = "Alemán"; // de
+    private static final String FRANCES = "Francés"; // fr
+    private static final String COREANO = "Coreano"; // ko
+
     private RecyclerView recycler;
     private LstMoviesPresenter lstMoviesPresenter;
     private RecyclerView.LayoutManager lManager;
     private MovieAdapter.RecyclerViewClickListener listener;
-    private String[] listaSpinner = {"Filtrar por idioma original:", "es", "en", "de", "fr", "ko"};
+    private String[] listaSpinner = {"Filtrar por idioma original:", ESPANOL, INGLES, ALEMAN, FRANCES, COREANO};
 
     private View layoutError;
     private TextView textViewError;
@@ -148,8 +154,25 @@ public class LstMoviesActivity extends AppCompatActivity implements LstMoviesCon
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String idioma = parent.getItemAtPosition(position).toString();
+
                 if(idioma.equals("Filtrar por idioma original:"))
                     return;
+                if(idioma.equals(ESPANOL)) {
+                    idioma = "es";
+                }
+                if(idioma.equals(INGLES)) {
+                    idioma = "en";
+                }
+                if(idioma.equals(ALEMAN)) {
+                    idioma = "de";
+                }
+                if(idioma.equals(FRANCES)) {
+                    idioma = "fr";
+                }
+                if(idioma.equals(COREANO)) {
+                    idioma = "ko";
+                }
+
                 Intent intent = new Intent(parent.getContext(), FilterMoviesActivity.class);
                 intent.putExtra("idioma", idioma);
                 parent.getContext().startActivity(intent);
