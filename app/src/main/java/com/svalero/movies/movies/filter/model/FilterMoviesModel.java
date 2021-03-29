@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class FilterMoviesModel implements FilterMoviesContract.Model {
-    private static final String URL = BuildConfig.URL_BASE + "&with_original_language=";
+    private static final String URL = BuildConfig.BASE_URL + "&with_original_language=";
 
     private ArrayList<Movie> lstArrayMovies;
     private String idioma;

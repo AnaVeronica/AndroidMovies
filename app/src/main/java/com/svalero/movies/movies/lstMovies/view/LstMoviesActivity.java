@@ -54,7 +54,7 @@ public class LstMoviesActivity extends AppCompatActivity implements LstMoviesCon
 
 
         lstMoviesPresenter = new LstMoviesPresenter(this);
-        lstMoviesPresenter.getMovies();
+        lstMoviesPresenter.getMovies(this);
 
         setRetry();
     }
@@ -66,7 +66,7 @@ public class LstMoviesActivity extends AppCompatActivity implements LstMoviesCon
                 progressBarLoading.setVisibility(View.VISIBLE);
                 hideError();
 
-                lstMoviesPresenter.getMovies();
+                lstMoviesPresenter.getMovies(LstMoviesActivity.this);
             }
         });
     }

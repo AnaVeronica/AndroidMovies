@@ -1,10 +1,15 @@
 package com.svalero.movies.movies.lstMovies.model;
 
+import android.content.Context;
 import android.os.AsyncTask;
+
+import androidx.annotation.Nullable;
 
 import com.svalero.movies.BuildConfig;
 import com.svalero.movies.beans.Movie;
+import com.svalero.movies.beans.MoviesAPIResult;
 import com.svalero.movies.movies.lstMovies.contract.LstMoviesContract;
+import com.svalero.movies.retrofit.ApiClient;
 import com.svalero.movies.utils.Post;
 
 import org.json.JSONArray;
@@ -13,53 +18,34 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LstMoviesModel implements LstMoviesContract.Model {
-    private static final String URL = BuildConfig.URL_BASE + "&page=1";
-    private ArrayList<Movie> lstArrayMovies;
-    OnLstMoviesListener onLstMoviesListener;
+
+    private static final String TAG = LstMoviesModel.class.getSimpleName();
 
     @Override
-    public void getMoviesWS(final OnLstMoviesListener onLstMoviesListener) {
-        // Callback
-        this.onLstMoviesListener = onLstMoviesListener;
-        DataApiTask dat = new DataApiTask();
-        dat.execute();
-    }
+    public void getMoviesWS(Context context, final OnLstMoviesListener onLstMoviesListener) {
+        ApiClient apiClient = new ApiClient(context); // Instanciar a la clase ApiClient
+        final Call<MoviesAPIResult> request = apiClient.getMovies(); // Devuelve un Call de MoviesAPIResult
 
-    /**
-     * Permite traer los datos del API en 2º plano
-     */
-    class DataApiTask extends AsyncTask<String, Integer, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(String... strings) {
-            Post post = new Post();
-
-            try {
-                JSONObject objectMovies = post.getServerDataGetObject(URL);
-                JSONArray lstMovies = objectMovies.getJSONArray("results");
-                lstArrayMovies = Movie.getArrayListFromJSON(lstMovies);
-                return true;
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean resp) {
-            try {
-                if(resp){
-                    if (lstArrayMovies != null && lstArrayMovies.size() > 0) {
-                        onLstMoviesListener.resolve(lstArrayMovies);
-                    }
-                } else {
-                    onLstMoviesListener.reject("Fallo al listar las películas");
+        // Encolar las peticiones para ejecutarlas en un thread aparte
+        request.enqueue(new Callback<MoviesAPIResult>() { // MoviesAPIResult es el objeto que se desea obtener
+            @Override
+            public void onResponse(@Nullable Call<MoviesAPIResult> call, @Nullable Response<MoviesAPIResult> response) {
+                if (response != null && response.body() != null) {
+                    onLstMoviesListener.resolve(new ArrayList<Movie>(response.body().getResults()));
                 }
-            } catch(Exception e){
-                onLstMoviesListener.reject("Fallo: Listar películas");
             }
-        }
+
+            @Override
+            public void onFailure(@Nullable Call<MoviesAPIResult> call, @Nullable Throwable t) {
+                t.printStackTrace();
+                onLstMoviesListener.reject(t.getLocalizedMessage());
+            }
+        });
     }
+
 }
