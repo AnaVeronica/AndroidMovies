@@ -2,13 +2,16 @@ package com.svalero.movies.movies.lstMovies.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,11 +38,11 @@ public class LstMoviesActivity extends AppCompatActivity implements LstMoviesCon
     private LstMoviesPresenter lstMoviesPresenter;
     private RecyclerView.LayoutManager lManager;
     private MovieAdapter.RecyclerViewClickListener listener;
-    private String[] listaSpinner = {"Filtrar por idioma original:", ESPANOL, INGLES, ALEMAN, FRANCES, COREANO};
 
     private View layoutError;
     private TextView textViewError;
     private Button buttonRetry;
+    private Button button;
     private ProgressBar progressBarLoading;
 
     @Override
@@ -47,20 +50,22 @@ public class LstMoviesActivity extends AppCompatActivity implements LstMoviesCon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lst_movies);
 
-        cargarSpinner();
 
         // Obtener el Recycler y el layout y sus componentes en caso de error
         recycler = findViewById(R.id.recyclerMovies);
         layoutError = findViewById(R.id.activity_lst_movies_layout_error);
         textViewError = findViewById(R.id.activity_lst_movies_txt_error);
         buttonRetry = findViewById(R.id.activity_lst_movies_button_retry);
+        button = findViewById(R.id.submitButton);
         progressBarLoading = findViewById(R.id.activity_lst_movies_progressbar_loading);
 
         progressBarLoading.setVisibility(View.VISIBLE);
 
+        cargarSpinner();
 
         lstMoviesPresenter = new LstMoviesPresenter(this);
         lstMoviesPresenter.getMovies(this);
+
 
         setRetry();
     }
@@ -134,54 +139,53 @@ public class LstMoviesActivity extends AppCompatActivity implements LstMoviesCon
     }
 
 
-    /**
-     * Método que carga el spinner de valores previamente indicados
-     */
     public void cargarSpinner() {
-        Spinner spinnerFiltro = findViewById(R.id.spinnerFiltro);
-        ArrayAdapter<String> adapterFiltro = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listaSpinner);
-        spinnerFiltro.setAdapter(adapterFiltro);
-        spinnerFiltro.setSelected(false);
-        spinnerFiltro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        final AutoCompleteTextView ac_languages = findViewById(R.id.languageTextView);
 
-            /**
-             * Captura el elemento seleccionado del spinner
-             * @param parent
-             * @param view
-             * @param position
-             * @param id
-             */
+        ArrayList<String> listaIdiomas = getLanguagesList();
+
+        // Crear el adaptador
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(LstMoviesActivity.this, R.layout.list_item, listaIdiomas);
+        ac_languages.setAdapter(adapter);
+
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String idioma = parent.getItemAtPosition(position).toString();
+            public void onClick(View view) {
+                String idioma = String.valueOf(ac_languages.getText());
 
-                if(idioma.equals("Filtrar por idioma original:"))
-                    return;
-                if(idioma.equals(ESPANOL)) {
-                    idioma = "es";
-                }
-                if(idioma.equals(INGLES)) {
-                    idioma = "en";
-                }
-                if(idioma.equals(ALEMAN)) {
-                    idioma = "de";
-                }
-                if(idioma.equals(FRANCES)) {
-                    idioma = "fr";
-                }
-                if(idioma.equals(COREANO)) {
-                    idioma = "ko";
+                switch (idioma) {
+                    case ESPANOL:
+                        idioma = "es";
+                        break;
+                    case INGLES:
+                        idioma = "en";
+                        break;
+                    case ALEMAN:
+                        idioma = "de";
+                        break;
+                    case FRANCES:
+                        idioma = "fr";
+                        break;
+                    case COREANO:
+                        idioma = "ko";
+                        break;
                 }
 
-                Intent intent = new Intent(parent.getContext(), FilterMoviesActivity.class);
+                Intent intent = new Intent(getApplicationContext(), FilterMoviesActivity.class);
                 intent.putExtra("idioma", idioma);
-                parent.getContext().startActivity(intent);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+                startActivity(intent);
             }
         });
     }
+
+    private ArrayList<String> getLanguagesList() {
+        ArrayList<String> languagesList = new ArrayList<>();
+        languagesList.add(ESPANOL);
+        languagesList.add(INGLES);
+        languagesList.add(ALEMAN);
+        languagesList.add(FRANCES);
+        languagesList.add(COREANO);
+        return languagesList;
+    }
+
 }
