@@ -14,7 +14,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/languageSpinnerLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="300dp"
+            android:layout_width="@dimen/width_textInputLayout_activity_lst_movies"
             android:layout_height="wrap_content"
             app:startIconDrawable="@drawable/ic_language"
             android:padding="@dimen/general_padding"
@@ -30,12 +30,12 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/submitButton"
-            android:layout_width="105dp"
+            android:layout_width="@dimen/width_button_activity_lst_movies"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/languageSpinnerLayout"
             android:backgroundTint="@color/colorPrimary"
             android:padding="@dimen/general_button_padding"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/marginTop_button_activity_lst_movies"
             android:text="@string/text_button_search" />
     </RelativeLayout>
 
@@ -52,6 +52,8 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/marginStart_layoutError"
+        android:layout_marginEnd="@dimen/marginEnd_layoutError"
         android:layout_marginTop="@dimen/layoutError_marginTop"
         android:orientation="vertical">
 
@@ -59,7 +61,8 @@
             android:id="@+id/activity_lst_movies_txt_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:textSize="@dimen/textSize_textView_layoutError"/>
         <Button
             android:id="@+id/activity_lst_movies_button_retry"
             android:layout_width="wrap_content"

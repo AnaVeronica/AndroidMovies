@@ -13,4 +13,25 @@
     <dimen name="loading_marginTop">200dp</dimen>
     <dimen name="general_padding">3dp</dimen>
     <dimen name="general_button_padding">2dp</dimen>
+    <dimen name="width_textInputLayout_activity_lst_movies">300dp</dimen>
+    <dimen name="width_button_activity_lst_movies">105dp</dimen>
+    <dimen name="marginTop_button_activity_lst_movies">12dp</dimen>
+    <dimen name="paddingStart_image_activity_descript_movies">14dp</dimen>
+    <dimen name="paddingEnd_image_activity_descript_movies">14dp</dimen>
+    <dimen name="marginStart_cardText">4dp</dimen>
+    <dimen name="textSize_titulo_activity_descript_movies">18sp</dimen>
+    <dimen name="textSize_sipnosis_activity_descript_movies">18sp</dimen>
+    <dimen name="paddingStart_image_row_movie">14dp</dimen>
+    <dimen name="paddingEnd_image_row_movie">14dp</dimen>
+    <dimen name="marginStart_LinearLayout_row_movie">4dp</dimen>
+    <dimen name="marginTop_LinearLayout_row_movie">9dp</dimen>
+    <dimen name="width_image_row_movie">70dp</dimen>
+    <dimen name="height_image_row_movie">70dp</dimen>
+    <dimen name="marginBotton_titulo_row_movie">2dp</dimen>
+    <dimen name="textSize_titulo_row_movie">20sp</dimen>
+    <dimen name="padding_list_item">10dp</dimen>
+    <dimen name="textSize_list_item">17sp</dimen>
+    <dimen name="marginStart_layoutError">14dp</dimen>
+    <dimen name="marginEnd_layoutError">14dp</dimen>
+    <dimen name="textSize_textView_layoutError">17sp</dimen>
 </resources>

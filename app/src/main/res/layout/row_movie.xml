@@ -20,34 +20,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="3dp">
+            android:padding="@dimen/general_padding">
 
             <ImageView
                 android:id="@+id/imgMovie"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="@dimen/width_image_row_movie"
+                android:layout_height="@dimen/height_image_row_movie"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp"
+                android:paddingStart="@dimen/paddingStart_image_row_movie"
+                android:paddingEnd="@dimen/paddingEnd_image_row_movie"
                 tools:srcCompat="@tools:sample/avatars" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="9dp"
+                android:layout_marginStart="@dimen/marginStart_LinearLayout_row_movie"
+                android:layout_marginTop="@dimen/marginTop_LinearLayout_row_movie"
                 android:orientation="vertical"
                 android:layout_toEndOf="@+id/imgMovie">
                 <TextView
                     android:id="@+id/txtTitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
+                    android:layout_marginBottom="@dimen/marginBotton_titulo_row_movie"
                     android:text="Título"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/textSize_titulo_row_movie"
                     android:textStyle="bold"/>
             </LinearLayout>
         </RelativeLayout>

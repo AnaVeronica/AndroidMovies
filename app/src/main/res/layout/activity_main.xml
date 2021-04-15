@@ -8,17 +8,16 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark">
-
-    <ImageView
-        android:id="@+id/splashScreen"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/ic_logo"/>
+        android:background="@color/colorPrimaryDark">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/splashScreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_logo"/>
 
+    </RelativeLayout>
 </FrameLayout>

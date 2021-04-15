@@ -18,6 +18,8 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/marginStart_layoutError"
+        android:layout_marginEnd="@dimen/marginEnd_layoutError"
         android:layout_marginTop="@dimen/layoutError_marginTop"
         android:orientation="vertical">
 
@@ -25,7 +27,8 @@
             android:id="@+id/activity_filter_productos_txt_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:textSize="@dimen/textSize_textView_layoutError"/>
         <Button
             android:id="@+id/activity_filter_productos_button_retry"
             android:layout_width="wrap_content"
